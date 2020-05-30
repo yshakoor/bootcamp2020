@@ -1,0 +1,25 @@
+name: Jekyll site CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the site in the jekyll/builder container
+   # Runs a single command using the runners shell
+    - name: Install NodeJS
+      uses: actions/setup-node@v2-beta
+      with: 
+        node-version: 12
+    - name: Install Surge
+      run: npm install -g surge
+    - name: Run Surge
+      run: surge ./ yasser-shakoor-bootcamp-2020.surge.sh--token ${{secrets.SURGE_TOKEN}}
